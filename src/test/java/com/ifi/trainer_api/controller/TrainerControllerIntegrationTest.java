@@ -44,12 +44,29 @@ public class TrainerControllerIntegrationTest {
     }
 
     @Test
-    public void getAllTrainers_shouldReturnAshAndMisty() {
+    public void getAllTrainers_shouldReturnAshAndMisty_And_deleteTrainer_ShouldDeleteMisty() {
         Trainer[] trainers = this.restTemplate.getForObject("http://localhost:" + port + "/trainers/", Trainer[].class);
         assertNotNull(trainers);
         assertEquals(2, trainers.length);
 
         assertEquals("Ash", trainers[0].getName());
         assertEquals("Misty", trainers[1].getName());
+        
+
+        Trainer misty = this.restTemplate.getForObject("http://localhost:" + port + "/trainers/Misty", Trainer.class);
+        assertNotNull(misty);
+        
+        this.restTemplate.delete("http://localhost:" + port + "/trainers/Misty");
+        trainers = this.restTemplate.getForObject("http://localhost:" + port + "/trainers/", Trainer[].class);
+        assertNotNull(trainers);
+        assertEquals(1, trainers.length);
+
+        assertEquals("Ash", trainers[0].getName());
     }
+    
+    @Test
+    public void createTrainer_shouldDoSomething() {
+        //TODO
+    }
+    
 }

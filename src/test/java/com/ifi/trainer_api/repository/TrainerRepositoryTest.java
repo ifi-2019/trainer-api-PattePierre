@@ -2,6 +2,7 @@ package com.ifi.trainer_api.repository;
 
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -63,6 +64,18 @@ public class TrainerRepositoryTest {
 
         assertEquals("Misty", saved.getName());
         assertEquals(2, saved.getTeam().size());
+    }
+    
+    @Test
+    public void testDeleteById(){ 
+        Trainer ash = new Trainer("Ash");
+
+        repository.save(ash);
+        Trainer saved = repository.findById(ash.getName()).orElse(null);
+        assertEquals("Ash", saved.getName());
+        repository.deleteById(ash.getName());
+        saved = repository.findById(ash.getName()).orElse(null);
+        assertNull(saved);
     }
 
 }

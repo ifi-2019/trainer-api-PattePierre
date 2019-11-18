@@ -13,6 +13,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -101,5 +102,20 @@ public class TrainerControllerTest {
  
         assertNotNull(postMapping);
         assertArrayEquals(new String[]{"/"}, postMapping.value());
+    }
+    
+    @Test
+    public void deleteTrainer_shouldBeAnnotated() throws NoSuchMethodException {
+        Method deleteTrainer =
+                TrainerController.class.getDeclaredMethod("deleteTrainer", String.class);
+        DeleteMapping deleteMapping = deleteTrainer.getAnnotation(DeleteMapping.class);
+
+        PathVariable pathVariableAnnotation = deleteTrainer.getParameters()[0].getAnnotation(PathVariable.class);
+
+ 
+        assertNotNull(deleteMapping);
+        assertArrayEquals(new String[]{"/{name}"}, deleteMapping.value());
+        
+        assertNotNull(pathVariableAnnotation);
     }
 }
