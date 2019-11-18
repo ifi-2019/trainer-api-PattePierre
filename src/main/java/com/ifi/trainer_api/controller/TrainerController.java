@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,8 +31,8 @@ public class TrainerController {
         return this.trainerService.getTrainer(name); 
     }
     
-    @PostMapping("/")
-    void createTrainer(Trainer trainer) {
+    @PostMapping(path="/",consumes = "application/json")
+    void createTrainer(@RequestBody Trainer trainer) {
     	this.trainerService.createTrainer(trainer);
     }
     
