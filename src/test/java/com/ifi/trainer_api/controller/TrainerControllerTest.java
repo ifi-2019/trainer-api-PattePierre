@@ -15,9 +15,11 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ifi.trainer_api.bo.Trainer;
 import com.ifi.trainer_api.service.TrainerService;
 
 @RunWith( SpringJUnit4ClassRunner.class )
@@ -46,6 +48,14 @@ public class TrainerControllerTest {
         trainerController.getTrainer("Ash");
 
         verify(trainerService).getTrainer("Ash");
+    }
+    
+    @Test
+    public void postTrainer_shouldCallTheService() {
+    	Trainer ash = new Trainer("Ash");
+        trainerController.createTrainer(ash);
+
+        verify(trainerService).createTrainer(ash);
     }
     
     @Test
@@ -81,5 +91,15 @@ public class TrainerControllerTest {
         assertArrayEquals(new String[]{"/{name}"}, getMapping.value());
 
         assertNotNull(pathVariableAnnotation);
+    }
+    
+    @Test
+    public void createTrainer_shouldBeAnnotated() throws NoSuchMethodException {
+        Method getTrainer =
+                TrainerController.class.getDeclaredMethod("createTrainer", Trainer.class);
+        PostMapping postMapping = getTrainer.getAnnotation(PostMapping.class);
+ 
+        assertNotNull(postMapping);
+        assertArrayEquals(new String[]{"/"}, postMapping.value());
     }
 }
