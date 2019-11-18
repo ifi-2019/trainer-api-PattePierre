@@ -9,14 +9,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.ifi.trainer_api.bo.Pokemon;
 import com.ifi.trainer_api.bo.Trainer;
 
-@DataJpaTest 
+@DataJpaTest
+@RunWith( SpringJUnit4ClassRunner.class )
 public class TrainerRepositoryTest {
 	
 
